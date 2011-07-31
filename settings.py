@@ -38,6 +38,11 @@ FINAL_MESSAGE = 'To prevent malaria, sleep under a mosquito net!'
 
 DEFAULT_DEACTIVATION_MESSAGE = ('You will not receive any more '
                                 'messages from Mobile Health')
+
+
+SPECIAL_SUBJECT_NUMBERS = ['+233266688206', '+233263119161']
+CLEAR_SPECIAL_SUBJECTS_TIME = (23,00)
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.

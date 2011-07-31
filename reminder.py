@@ -116,6 +116,13 @@ class PACT (Handler):
             self.send(subject.phone_number, 
                       settings.FINAL_MESSAGE)                       
         log.debug('Done sending final message.') 
+        
+    def clear_special_subjects(self):
+        subjects = Subject.objects.filter(phone_number__in=
+                                          settings.SPECIAL_SUBJECT_NUMBERS)
+        n = len(subjects)
+        subjects.delete()
+        log.debug('Deleted %s records' % n)
     
 def main():
     import optparse
@@ -151,6 +158,10 @@ def setup_app(gateway, options):
     if settings.SEND_FINAL_MESSAGES_TIME:
         add_task('Send Final Messages', app.send_final_messages,
                  settings.SEND_FINAL_MESSAGES_TIME)
+    if settings.SPECIAL_SUBJECT_NUMBERS and \
+       settings.CLEAR_SPECIAL_SUBJECTS_TIME:
+        add_task('Clear Special Subjects', app.clear_special_subjects,
+                 settings.CLEAR_SPECIAL_SUBJECTS_TIME)
         
     v = []
     if options.clear_schedule:
