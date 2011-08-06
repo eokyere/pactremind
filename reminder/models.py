@@ -18,8 +18,8 @@ class Subject(models.Model):
     """
     phone_number = models.CharField(max_length=15)
     active = models.BooleanField(default=True)
-    message_id = models.IntegerField(null=True)
-    messages_left = models.IntegerField(null=True)
+    message_id = models.IntegerField(null=True, blank=True)
+    messages_left = models.IntegerField(null=True, blank=True)
     received_at = models.DateTimeField()
     
     def __unicode__(self):
