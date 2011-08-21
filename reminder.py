@@ -80,12 +80,17 @@ class PACT (Handler):
 
     def send_reminder(self, subject):
         if subject.messages_left >= 1:
-            text = settings.MESSAGES[subject.message_id]
-            log.debug('>>> sending info: %s' % text)
-            self.send(number=subject.phone_number, text=text)
-            subject.messages_left -= 1
-            subject.save()
-            log.debug(">>  message sent: %s" % subject)
+            try:
+                text = settings.MESSAGES[subject.message_id]
+                log.debug('>>> sending message: %s' % text)
+                self.send(number=subject.phone_number, text=text)
+                subject.messages_left -= 1
+                subject.save()
+                log.debug(">>  message sent: %s" % subject)
+            except IndexError, e:
+                import traceback
+                log.error('%s: %s' % (e, subject.message_id,))
+                log.error(''.join(traceback.format_exception(*sys.exc_info())))
         else:
             log.debug('>> %s has no reminders left' % subject)
 
